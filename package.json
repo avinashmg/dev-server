@@ -1,0 +1,12 @@
+{
+  "name": "dev-server",
+  "version": "1.0.0",
+  "description": "A personal dev server for serving singlepage websites",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
