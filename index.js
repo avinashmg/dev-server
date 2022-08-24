@@ -1,11 +1,37 @@
 #!/usr/bin/env node
 
 const http = require("http");
+const fs = require("fs");
 
 const port = 8001;
 const requestListener = function (req, res) {
-  res.writeHead(200);
-  res.end("Hello, World!");
+  fs.readFile(process.cwd() + req.url, function (err, data) {
+    if (err) {
+      fs.readFile(
+        process.cwd() + req.url + "/index.html",
+        function (err, data) {
+          if (err) {
+            fs.readFile(process.cwd() + "/index.html", function (err, data) {
+              if (err) {
+                res.writeHead(404);
+                res.end(JSON.stringify(err));
+                return;
+              } else {
+                res.writeHead(200);
+                res.end(data);
+              }
+            });
+          } else {
+            res.writeHead(200);
+            res.end(data);
+          }
+        }
+      );
+    } else {
+      res.writeHead(200);
+      res.end(data);
+    }
+  });
 };
 
 const server = http.createServer(requestListener);
